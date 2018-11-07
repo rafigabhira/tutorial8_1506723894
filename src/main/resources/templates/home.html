@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Home</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <br>
+
+    <div th:if="${message == 0}" class="alert alert-success" role="alert">
+        Berhasil menambahkan user baru
+    </div>
+    <div th:if="${message == 1}" class="alert alert-danger" role="alert">
+        Password harus terdiri dari nomor dan angka
+    </div>
+    <div th:if="${message == 2}" class="alert alert-danger" role="alert">
+        Password harus terdiri minimal 8 karakter
+    </div>
+
+    <div th:if="${status == 1}" class="alert alert-danger" role="alert">
+        Password lama invalid
+    </div>
+    <div th:if="${status == 2}" class="alert alert-danger" role="alert">
+        Password baru harus sesuai
+    </div>
+    <div th:if="${status == 3}" class="alert alert-success" role="alert">
+        Password berhasil diubah
+    </div>
+    <div th:if="${status == 4}" class="alert alert-danger" role="alert">
+        Password harus terdiri dari nomor dan angka
+    </div>
+    <div th:if="${status == 5}" class="alert alert-danger" role="alert">
+        Password harus terdiri minimal 8 karakter
+    </div>
+
+    <div class="container-fluid">
+        <h2 th:text="'Hello ' + ${#httpServletRequest.remoteUser} + '! '"></h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Tambah Pilot
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Fitur untuk menambah pilot.</p>
+                        <a class="btn btn-primary" th:href="@{/admin/pilot/add}">Tambah</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Cari Pilot berdasarkan Nomor Lisensi
+                    </div>
+                    <form th:action="@{/pilot/view}" method="GET">
+                        <div class="card-body">
+                            <label for="licenseNumber">License Number:</label>
+                            <input id="licenseNumber" type="text" name="licenseNumber" class="form-control" />
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Tambah User Baru
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/user/addUser}" method="post">
+                            <div class="row form-group">
+                                <label class="col-md-4"> User Name: </label>
+                                <input class="col-md-8 form-control input-sm" type="text" name="username">
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-4"> Password: </label>
+                                <input class="col-md-8 form-control input-sm" type="password" name="password">
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-4"> Role: </label>
+                                <input class="col-md-8 form-control input-sm" type="text" name="role">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Update Password
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{'/user/updatePassword/' + ${#httpServletRequest.remoteUser}}" method="post">
+                            <div class="row form-group">
+                                <label class="col-md-4"> Password Lama: </label>
+                                <input class="col-md-8 form-control input-sm" type="password" name="oldPass">
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-4"> Password Baru: </label>
+                                <input class="col-md-8 form-control input-sm" type="password" name="newPass">
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-4"> Konfirmasi Password Baru: </label>
+                                <input class="col-md-8 form-control input-sm" type="password" name="confirmNewPass">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
